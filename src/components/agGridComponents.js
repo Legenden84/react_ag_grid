@@ -15,21 +15,13 @@ class AgGridComponent extends Component {
         }
     }
 
-    updateColumnDefs(columnDefs) {
-        return columnDefs.map(col => {
-            return Object.assign({}, col, {
-                floatingFilter: true,
-            })
-        })
-    }
-
     render() {
         const { columnDefs, rowData } = this.props;
         return (
             <div className="ag-theme-alpine" style={{ height: 400, width: "100%" }}>
                 <AgGridReact
                     onGridReady={this.onGridReady}
-                    columnDefs={this.updateColumnDefs(columnDefs)}
+                    columnDefs={columnDefs}
                     defaultColDef={this.defaultColDefs()}
                     rowData={rowData}
                 />

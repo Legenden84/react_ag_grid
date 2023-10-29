@@ -1,3 +1,5 @@
+import { fetchFilterOptions } from "./filterActions";
+
 export const FETCH_DATA_REQUEST = 'FETCH_DATA_REQUEST';
 export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
 export const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
@@ -31,6 +33,7 @@ export function fetchData() {
             const response = await fetch(url);
             const data = await response.json();
             dispatch(agGridDataSuccess(data.columnDefs, data.rowData));
+            dispatch(fetchFilterOptions());
         } catch (error) {
             dispatch(agGridDataFailure(error.message));
         }

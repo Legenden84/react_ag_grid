@@ -6,6 +6,7 @@ const mapStateToProps = (state) => {
     return {
         rowData: state.agGrid.rowData,
         columnDefs: state.agGrid.columnDefs,
+        filterOptions: state.agGrid.filterOptions
     };
 };
 

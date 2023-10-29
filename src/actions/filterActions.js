@@ -28,8 +28,9 @@ export function fetchFilterOptions() {
         try {
             let url = 'https://run.mocky.io/v3/e68e2f9b-2574-47b6-900c-53e6df66fc30';
             const response = await fetch(url);
-            const data = await response.json();
-            dispatch(filterOptionsSuccess(data));
+            const filterOptions = await response.json();
+            console.log("filterOptions", filterOptions);
+            dispatch(filterOptionsSuccess(filterOptions));
         } catch (error) {
             dispatch(filterOptionsFailure(error.message));
         }

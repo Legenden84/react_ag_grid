@@ -1,20 +1,20 @@
 import { connect } from "react-redux";
 import filterComponent from '../components/filterComponent';
-import { fetchFilterOptions } from '../actions/filterActions';
+import { fetchFilterOptions } from '../actions/agGridActions';
 
 const mapStateToProps = (state) => {
     return {
-      filterOptions: state.filter.filterOptions
+      filterOptions: state.agGrid.filterOptions
     };
-  };
+};
   
-  const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
     return {
-      fetchFilterOptions: () => dispatch(fetchFilterOptions())
+        fetchFilterOptions: () => dispatch(fetchFilterOptions())
     };
-  };
+};
   
-  export default connect(
+export default connect(
     mapStateToProps,
     mapDispatchToProps
-  )(CustomFloatingFilter);
+)(filterComponent);
