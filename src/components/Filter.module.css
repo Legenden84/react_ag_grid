@@ -1,0 +1,58 @@
+.customFilter {
+    display: inline-block; /* Add this line */
+    box-sizing: border-box;
+    font-family: 'ag-grid', sans-serif;
+    font-size: 14px;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.filter-entry {
+    margin-bottom: 5px;
+}
+
+.filter-entry button {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    text-align: left;
+}
+
+.filter-entry button:hover {
+    background-color: #f3f3f3;
+}
+
+.filter-entry button.selected {
+    background-color: #cce5ff;
+    border-color: #b8daff;
+}
+
+.filter-entry button.selected:hover {
+    background-color: #b8daff;
+}
+
+/* This removes the border and shadow around the filter dropdown panel */
+
+
+/* Adjust the backdrop color if needed */
+
+
+.ag-rich-select, .ag-rich-select-list, .ag-popup-editor, .ag-popup-child {
+    width: fit-content !important;
+    max-width: fit-content !important;
+}
+
+.ag-react-container {
+    width: fit-content !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    min-width: 0 !important;
+}
+
