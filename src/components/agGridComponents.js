@@ -7,7 +7,6 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 class AgGridComponent extends Component {
     componentDidMount() {
         this.props.fetchData();
-        document.documentElement.style.setProperty('--ag-tooltip-background-color', 'transparent');
     }
 
     defaultColDefs() {
@@ -46,6 +45,12 @@ class AgGridComponent extends Component {
         });
     }
 
+    gridOptions() {
+        return {
+            rowSelection: 'multiple',
+        };
+    }
+
     render() {
         const { columnDefs, rowData } = this.props;
         return (
@@ -54,6 +59,7 @@ class AgGridComponent extends Component {
                     onGridReady={this.onGridReady}
                     columnDefs={this.updateColumnDefs(columnDefs)}
                     defaultColDef={this.defaultColDefs()}
+                    gridOptions={this.gridOptions()}
                     rowData={rowData}
                     animateRows={true}
                 />
