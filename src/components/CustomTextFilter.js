@@ -2,10 +2,7 @@ import React, { forwardRef, useState, useImperativeHandle, useEffect } from "rea
 
 const CustomTextFilter = forwardRef((props, ref) => {
     console.log(props);
-    
     const [filterText, setFilterText] = useState('');
-
-    // Use the persistent selection state passed in props
     const { selectedRows } = props;
 
     useImperativeHandle(ref, () => ({
@@ -20,7 +17,7 @@ const CustomTextFilter = forwardRef((props, ref) => {
             if (rowIsSelected) {
                 return true;
             }
-
+            
             const field = props.colDef.field;
             const fieldValue = params.data[field];
             if (fieldValue !== undefined && fieldValue !== null) {

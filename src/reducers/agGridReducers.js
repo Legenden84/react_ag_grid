@@ -1,4 +1,10 @@
-import { FETCH_DATA_REQUEST, FETCH_DATA_SUCCESS, FETCH_DATA_FAILURE } from "../actions/agGridActions";
+import { 
+    FETCH_DATA_REQUEST, 
+    FETCH_DATA_SUCCESS, 
+    FETCH_DATA_FAILURE,
+    SELECT_ROW,
+    DESELECT_ROW
+} from "../actions/agGridActions";
 import { FETCH_FILTER_OPTIONS_REQUEST, FETCH_FILTER_OPTIONS_SUCCESS, FETCH_FILTER_OPTIONS_FAILURE } from "../actions/filterActions";
 
 const initialState = {
@@ -6,6 +12,7 @@ const initialState = {
     columnDefs: [],
     loading: false,
     error: null,
+    selectedRows: [],
     filterOptions: {
         options: {},
         loading: false,
@@ -30,6 +37,21 @@ function agGridReducer(state = initialState, action) {
                 loading: false,
                 error: action.payload
             });
+
+        case SELECT_ROW:
+            if (!state.selectedRows.some(row => row.id === action.payload)) {
+                return {
+                    ...state,
+                    selectedRows: [...state.selectedRows, action.payload]
+                };
+            }
+            return state;
+
+            case DESELECT_ROW:
+                return {
+                    ...state,
+                    selectedRows: state.selectedRows.filter(row => row !== action.payload)
+                };
 
         case FETCH_FILTER_OPTIONS_REQUEST:
             return Object.assign({}, state, {

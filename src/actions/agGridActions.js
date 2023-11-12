@@ -4,6 +4,9 @@ export const FETCH_DATA_REQUEST = 'FETCH_DATA_REQUEST';
 export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
 export const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
 
+export const SELECT_ROW = 'SELECT_ROW';
+export const DESELECT_ROW = 'DESELECT_ROW';
+
 export function agGridDataRequest() {
     return {
         type: FETCH_DATA_REQUEST,
@@ -22,6 +25,20 @@ export function agGridDataFailure(error) {
     return {
         type: FETCH_DATA_FAILURE,
         payload: error
+    }
+};
+
+export function selectRow(rowData) {
+    return {
+        type: SELECT_ROW,
+        payload: rowData
+    }
+};
+
+export function deselectRow(rowData) {
+    return {
+        type: DESELECT_ROW,
+        payload: rowData
     }
 };
 

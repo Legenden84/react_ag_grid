@@ -6,13 +6,6 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
 class AgGridComponent extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedRows: [],
-        };
-    }
-
     componentDidMount() {
         this.props.fetchData();
     }
@@ -20,15 +13,6 @@ class AgGridComponent extends Component {
     onGridReady = params => {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
-    };
-
-    onRowSelected = () => {
-        const selectedNodes = this.gridApi.getSelectedNodes();
-        const selectedData = selectedNodes.map(node => node.data);
-        this.setState({ selectedRows: selectedData }, () => {
-            // Refresh the external filter after updating the selected rows
-            this.gridApi.onFilterChanged();
-        });
     };
 
     defaultColDefs() {
@@ -60,7 +44,7 @@ class AgGridComponent extends Component {
                 return Object.assign({}, col, {
                     filter: CustomTextFilter,
                     filterParams: {
-                        selectedRows: this.state.selectedRows
+                        selectedRows: this.props.selectedRows,
                     },
                     floatingFilter: true,
                 })
@@ -68,43 +52,19 @@ class AgGridComponent extends Component {
         });
     }
 
-    isExternalFilterPresent = () => {
-        // External filter is active if there are selected rows
-        return this.state.selectedRows.length > 0;
-    };
 
-    doesExternalFilterPass = (node) => {
-        // If the row is selected, it always passes the filter
-        if (this.state.selectedRows.some(row => row === node.data)) {
-            return true;
+    onRowClicked = event => {
+        const rowData = event.data;
+        if (this.props.selectedRows.some(row => row === rowData)) {
+            this.props.deselectRow(rowData);
+        } else {
+            this.props.selectRow(rowData);
         }
-        // Otherwise, check if the row passes the current filter model
-        return this.checkIfRowPassesFilters(node);
     };
-
-    checkIfRowPassesFilters(node) {
-        const filterModel = this.gridApi.getFilterModel();
-        
-        for (const [colId, filter] of Object.entries(filterModel)) {
-            const cellValue = node.data[colId] ? node.data[colId].toString().toLowerCase() : '';
-            const filterText = filter.filter ? filter.filter.toLowerCase() : '';
-
-            if (!cellValue.includes(filterText)) {
-                // If any filter condition fails, the row does not pass
-                return false;
-            }
-        }
-
-        // If all filter conditions pass, the row passes
-        return true;
-    }
 
     gridOptions() {
         return {
             rowSelection: 'multiple',
-            onRowSelected: this.onRowSelected,
-            isExternalFilterPresent: this.isExternalFilterPresent,
-            doesExternalFilterPass: this.doesExternalFilterPass,
         };
     }
 
@@ -114,6 +74,7 @@ class AgGridComponent extends Component {
             <div className="ag-theme-alpine" style={{ height: 400, width: "100%" }}>
                 <AgGridReact
                     onGridReady={this.onGridReady}
+                    onRowClicked={this.onRowClicked}
                     columnDefs={this.updateColumnDefs(columnDefs)}
                     defaultColDef={this.defaultColDefs()}
                     gridOptions={this.gridOptions()}
